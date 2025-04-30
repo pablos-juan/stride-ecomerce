@@ -16,7 +16,7 @@ export function Products ({ products }) {
         {products.map(product => (
           <li key={product.id} className='border-1 border-neutral-700 hover:border-amber-100 transition-all duration-300 group rounded-xl flex flex-col justify-between overflow-hidden bg-neutral-800'>
             <div
-              className='flex h-72 items-start flex-col justify-end p-4 gap-2 bg-no-repeat bg-center bg-contain'
+              className='flex h-72 items-start flex-col justify-end p-4 gap-1 bg-no-repeat bg-center bg-contain'
               style={{ backgroundImage: `linear-gradient(to top, #040404, transparent), url(${product.thumbnail})` }}
             >
               <div className='flex items-center gap-2'>
@@ -27,7 +27,7 @@ export function Products ({ products }) {
                 <Rating rating={product.rating} />
               </div>
 
-              <h1 className='font-bold text-lg md:text-xl text-white leading-6'>
+              <h1 className='font-bold text-lg ml-0.5 md:text-xl max-w-3/4 text-white leading-6'>
                 {product.title}
               </h1>
             </div>
