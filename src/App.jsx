@@ -3,7 +3,7 @@ import { Products } from './components/Products'
 import { products as initialProducts } from './mocks/products.json'
 import { Header } from './components/Header'
 import { useFilters } from './hooks/useFilters'
-import { BottomBar } from './components/BottomBar'
+import { MenuSection } from './components/BottomBar'
 
 export function App () {
   const [products] = useState(initialProducts)
@@ -14,7 +14,7 @@ export function App () {
   return (
     <>
       <Header />
-      <BottomBar />
+      <MenuSection />
       <Products products={filteredProducts} />
     </>
   )
