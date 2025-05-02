@@ -1,1 +1,28 @@
 @import "tailwindcss";
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgb(252, 211, 77);
+  cursor: pointer;
+  border: 2px solid #171717;
+  box-shadow: 0 0 5px rgba(252, 211, 77, 0.4);
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  box-shadow: 0 0 10px rgba(252, 211, 77, 0.6);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgb(252, 211, 77);
+  cursor: pointer;
+  border: 2px solid #171717;
+  box-shadow: 0 0 5px rgba(252, 211, 77, 0.4);
+}
+input[type="range"]::-moz-range-thumb:hover {
+  box-shadow: 0 0 10px rgba(252, 211, 77, 0.6);
+}

@@ -2,16 +2,16 @@ import { ShoppingCart, Star } from 'lucide-react'
 
 function Rating ({ rating }) {
   return (
-    <div className='flex items-center bg-neutral-800 rounded-full px-2.5 py-1 gap-1'>
-      <Star className='w-3.5 h-3.5 fill-amber-200 text-amber-200' />
-      <span className='align-middle leading-none text-xs font-medium text-amber-200'>{rating.toFixed(1)}</span>
+    <div className='flex items-center bg-amber-200/20 rounded-full px-2.5 py-1 gap-1'>
+      <Star className='w-3.5 h-3.5 fill-amber-100 text-amber-100' />
+      <span className='align-middle leading-none text-xs font-medium text-amber-100'>{rating.toFixed(1)}</span>
     </div>
   )
 }
 
 export function Products ({ products }) {
   return (
-    <section className='w-full flex justify-center p-1 md:p-4'>
+    <section className='w-full flex justify-center p-1 md:p-4 mb-8 md:mb-0'>
       <ul className='w-full grid grid-cols-[repeat(auto-fit,minmax(310px,1fr))] gap-3 md:gap-4'>
         {products.map(product => (
           <li key={product.id} className='border-1 border-neutral-700 hover:border-amber-100 transition-all duration-300 group rounded-xl flex flex-col justify-between overflow-hidden bg-neutral-800'>
@@ -20,7 +20,7 @@ export function Products ({ products }) {
               style={{ backgroundImage: `linear-gradient(to top, #040404, transparent), url(${product.thumbnail})` }}
             >
               <div className='flex items-center gap-2'>
-                <span className='inline-block px-2.5 py-1 bg-neutral-800 text-amber-200 text-xs font-normal rounded-full'>
+                <span className='inline-block px-2.5 py-1 bg-amber-200/20 text-amber-100 text-xs font-normal rounded-full'>
                   {product.category}
                 </span>
 
