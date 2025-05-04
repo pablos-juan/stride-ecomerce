@@ -2,42 +2,51 @@ import { useState } from 'react'
 import { useFilters } from '../hooks/useFilters'
 import { ChevronDown, ChevronUp, Filter, Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react'
 import { Filters } from './Filters'
+import { useCart } from '../hooks/useCart'
 
-function OnCardProduct () {
-  return (
-    <article className='flex items-center bg-neutral-800 p-2.5 gap-4 rounded'>
+function Cart ({ cart, addToCart, removeFromCart, removeProduct }) {
+  return cart.map(product => (
+    <article key={product.id} className='flex items-center bg-neutral-800 p-2.5 gap-4 rounded'>
       <img
-        src='https://picsum.photos/200'
-        className='h-32 md:38'
+        src={product.thumbnail}
+        className='h-32'
         alt=''
       />
 
       <div className='flex flex-col gap-2 w-full'>
         <section className='flex justify-between'>
-          <div className='flex gap-2 text-amber-200 bg-neutral-700 items-center w-fit p-1 rounded'>
-            <p className='text-xl text-white'>12</p>
-            <Plus className='bg-amber-200/30 rounded-full' />
-            <Minus className='bg-amber-200/20 rounded-full' />
+          <div className='flex gap-2 text-amber-200 bg-neutral-700 items-center w-fit py-1 px-2 rounded'>
+            <p className='text-xl text-white'>
+              {product.quantity}
+            </p>
+            <button onClick={() => addToCart(product)} className='cursor-pointer hover:bg-amber-200/30 rounded-full border-2 border-amber-200 p-0.5 transition-colors duration-300'>
+              <Plus size={18} />
+            </button>
+            <button onClick={() => removeFromCart(product)} className='cursor-pointer hover:bg-amber-200/30 rounded-full border-2 border-amber-200 p-0.5 transition-colors duration-300'>
+              <Minus size={18} />
+            </button>
           </div>
 
-          <button className='p-2 text-red-200/70 cursor-pointer rounded transition-all duration-300 hover:bg-red-200/30 hover:text-red-200'>
+          <button onClick={() => removeProduct(product)} className='p-2 text-red-200/70 cursor-pointer rounded transition-all duration-300 hover:bg-red-200/30 hover:text-red-200'>
             <Trash2 />
           </button>
         </section>
 
         <h3 className='text-white text-2sm font-semibold leading-4.5 md:max-w-2/3'>
-          Producto numero uno de prueba con tres parrafos
+          {product.title}
         </h3>
 
         <p className='text-white text-xl font-extrabold'>
-          $3200
+          ${product.price}
         </p>
       </div>
     </article>
   )
+  )
 }
 
 export function MenuSection ({ children }) {
+  const { cart, addToCart, removeProduct, removeFromCart, totalQuantity } = useCart()
   const [isOpen, setIsOpen] = useState(false)
   const { filters } = useFilters()
 
@@ -53,7 +62,7 @@ export function MenuSection ({ children }) {
   return (
     <>
       <aside
-        className={`fixed left-1/2 transform -translate-x-1/2 bottom-0 bg-neutral-800 rounded-t-4xl h-[280px] w-full md:w-[700px] z-50 p-1 md:p-4 flex flex-col transition-all duration-300 border-1 border-neutral-500 ${isOpen ? 'translate-y-0 shadow-[0_-50px_90px_rgba(0,0,0,0.85)]' : 'translate-y-[280px] md:translate-y-[280px]'}`}
+        className={`fixed left-1/2 transform -translate-x-1/2 bottom-0 bg-neutral-800 rounded-t-4xl h-[400px] w-full md:w-[700px] z-50 p-1 md:p-4 flex flex-col transition-all duration-300 border-1 border-neutral-500 ${isOpen ? 'translate-y-0 shadow-[0_-50px_90px_rgba(0,0,0,0.85)]' : 'translate-y-[400px]'}`}
       >
         <article
           className='bg-neutral-800 text-white text-2sm font-bold border-1 border-neutral-500 border-b-transparent transition-all duration-300 rounded-t-3xl rounded-b-none w-fit h-fit px-3 py-2 flex items-center gap-2 absolute -top-12.5 left-1/2 -translate-x-1/2 z-40 shadow-[0_-50px_90px_rgba(0,0,0,0.85)]'
@@ -62,7 +71,7 @@ export function MenuSection ({ children }) {
             <div className='flex items-center py-0.5 px-2.5 gap-2 bg-amber-700/80 rounded-full'>
               <ShoppingBag size={18} className='text-amber-200' />
               <span className='text-amber-200'>
-                0
+                {totalQuantity}
               </span>
 
               {/* agregar el precio total del carrito */}
@@ -111,7 +120,7 @@ export function MenuSection ({ children }) {
               🛍️ Carrito
             </h2>
 
-            <OnCardProduct />
+            <Cart cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} removeProduct={removeProduct} />
           </article>
         </section>
       </aside>

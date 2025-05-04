@@ -1,8 +1,13 @@
 import { useContext } from 'react'
 import { FiltersContext } from '../context/filters'
+import { DEFAULT_FILTERS } from '../constants'
 
 export function useFilters () {
   const { filters, setFilters } = useContext(FiltersContext)
+
+  const resetFilters = () => {
+    setFilters(DEFAULT_FILTERS)
+  }
 
   const filterProducts = (products) => {
     return products.slice(0, 10).filter(product => {
@@ -16,5 +21,5 @@ export function useFilters () {
     })
   }
 
-  return { filterProducts, filters, setFilters }
+  return { filterProducts, filters, setFilters, resetFilters }
 }

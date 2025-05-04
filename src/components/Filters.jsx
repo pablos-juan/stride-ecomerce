@@ -1,9 +1,10 @@
 import { useId } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { useFilters } from '../hooks/useFilters'
+import { BUTTON_RED_STYLE, DEFAULT_FILTERS } from '../constants.js'
 
 export function Filters () {
-  const { filters, setFilters } = useFilters()
+  const { filters, setFilters, resetFilters } = useFilters()
   const rangeId = useId()
   const categoryId = useId()
 
@@ -65,6 +66,11 @@ export function Filters () {
 
         <ChevronDown className='absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-amber-200 pointer-events-none' />
       </div>
+
+      {Object.entries(filters).filter(([key, value]) => value !== DEFAULT_FILTERS[key]).length !== 0 &&
+        <div className='flex items-center gap-2 relative w-fit bg-neutral-800 rounded'>
+          <button onClick={resetFilters} className={`${BUTTON_RED_STYLE} font-bold  p-1.5 rounded`}>RESET</button>
+        </div>}
     </section>
   )
 }
