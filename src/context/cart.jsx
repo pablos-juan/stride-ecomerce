@@ -1,47 +1,77 @@
-import { createContext, useState } from 'react'
+import { createContext, useReducer } from 'react'
 
 export const CartContext = createContext()
 
-export function CartProvider ({ children }) {
-  const [cart, setCart] = useState([])
+const INITIAL_STATE = []
 
-  const addToCart = product => {
-    const productInCartIndex = cart.findIndex(item => item.id === product.id)
+const reducer = (state, action) => {
+  const { type: actionType, payload: actionPayload } = action
 
-    if (productInCartIndex >= 0) {
-      const newCart = structuredClone(cart)
-      newCart[productInCartIndex].quantity += 1
-      return setCart(newCart)
-    }
+  switch (actionType) {
+    case 'ADD_TO_CART': {
+      const { id } = actionPayload
+      const productInCartIndex = state.findIndex(item => item.id === id)
 
-    setCart(prev => ([
-      ...prev,
-      {
-        ...product,
-        quantity: 1
+      if (productInCartIndex >= 0) {
+        const newState = structuredClone(state)
+        newState[productInCartIndex].quantity += 1
+        return newState
       }
-    ]))
-  }
 
-  const removeFromCart = product => {
-    if (!cart.includes(product)) console.log('error jajaja')
+      return [
+        ...state,
+        {
+          ...actionPayload,
+          quantity: 1
+        }
+      ]
+    }
 
-    const productInCartIndex = cart.findIndex(item => item.id === product.id)
+    case 'REMOVE_PRODUCT': {
+      const { id } = actionPayload
+      return state.filter(item => item.id !== id)
+    }
 
-    if (productInCartIndex >= 0) {
-      const newCart = structuredClone(cart)
-      newCart[productInCartIndex].quantity -= 1
-      return setCart(newCart.filter(item => item.quantity !== 0))
+    case 'REMOVE_FROMCART': {
+      const { id } = actionPayload
+      const productInCartIndex = state.findIndex(item => item.id === id)
+
+      if (productInCartIndex >= 0) {
+        const newState = structuredClone(state)
+        newState[productInCartIndex].quantity -= 1
+        return newState.filter(item => item.quantity !== 0)
+      }
+
+      return state
+    }
+
+    case 'CLEAR_CART': {
+      return INITIAL_STATE
     }
   }
 
-  const removeProduct = product => {
-    setCart(prev => prev.filter(item => item.id !== product.id))
-  }
+  return state
+}
 
-  const clearCart = () => {
-    setCart([])
-  }
+export function CartProvider ({ children }) {
+  const [cart, dispatch] = useReducer(reducer, INITIAL_STATE)
+
+  const addToCart = product => dispatch({
+    type: 'ADD_TO_CART',
+    payload: product
+  })
+
+  const removeFromCart = product => dispatch({
+    type: 'REMOVE_FROMCART',
+    payload: product
+  })
+
+  const removeProduct = product => dispatch({
+    type: 'REMOVE_PRODUCT',
+    payload: product
+  })
+
+  const clearCart = () => dispatch({ type: 'CLEAR_CART' })
 
   const totalQuantity = cart.reduce((total, item) => total + item.quantity, 0)
 

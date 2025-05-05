@@ -3,13 +3,14 @@ import { useFilters } from '../hooks/useFilters'
 import { ChevronDown, ChevronUp, Filter, Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react'
 import { Filters } from './Filters'
 import { useCart } from '../hooks/useCart'
+import { BUTTON_RED_STYLE } from '../constants'
 
 function Cart ({ cart, addToCart, removeFromCart, removeProduct }) {
   return cart.map(product => (
-    <article key={product.id} className='flex items-center bg-neutral-800 p-2.5 gap-4 rounded'>
+    <article key={product.id} className='flex items-center bg-neutral-800 py-2.5 px-3 gap-4 rounded'>
       <img
         src={product.thumbnail}
-        className='h-32'
+        className='h-27'
         alt=''
       />
 
@@ -27,7 +28,7 @@ function Cart ({ cart, addToCart, removeFromCart, removeProduct }) {
             </button>
           </div>
 
-          <button onClick={() => removeProduct(product)} className='p-2 text-red-200/70 cursor-pointer rounded transition-all duration-300 hover:bg-red-200/30 hover:text-red-200'>
+          <button onClick={() => removeProduct(product)} className='p-2 text-red-200/70 cursor-pointer rounded transition-all duration-300 hover:bg-red-200/30 hover:text-red-200 active:text-red-100 active:bg-red-200/50'>
             <Trash2 />
           </button>
         </section>
@@ -46,7 +47,7 @@ function Cart ({ cart, addToCart, removeFromCart, removeProduct }) {
 }
 
 export function MenuSection ({ children }) {
-  const { cart, addToCart, removeProduct, removeFromCart, totalQuantity } = useCart()
+  const { cart, addToCart, removeProduct, removeFromCart, totalQuantity, clearCart } = useCart()
   const [isOpen, setIsOpen] = useState(false)
   const { filters } = useFilters()
 
@@ -62,7 +63,7 @@ export function MenuSection ({ children }) {
   return (
     <>
       <aside
-        className={`fixed left-1/2 transform -translate-x-1/2 bottom-0 bg-neutral-800 rounded-t-4xl h-[400px] w-full md:w-[700px] z-50 p-1 md:p-4 flex flex-col transition-all duration-300 border-1 border-neutral-500 ${isOpen ? 'translate-y-0 shadow-[0_-50px_90px_rgba(0,0,0,0.85)]' : 'translate-y-[400px]'}`}
+        className={`fixed left-1/2 transform -translate-x-1/2 md:right-3 md:left-auto md:translate-x-0 bottom-0 bg-neutral-800 rounded-t-4xl h-[650px] w-full md:w-[448px] z-50 p-1 md:p-4 flex flex-col transition-all duration-300 border-1 border-neutral-500 ${isOpen ? 'translate-y-0 shadow-[0_-50px_90px_rgba(0,0,0,0.85)]' : 'translate-y-[650px]'}`}
       >
         <article
           className='bg-neutral-800 text-white text-2sm font-bold border-1 border-neutral-500 border-b-transparent transition-all duration-300 rounded-t-3xl rounded-b-none w-fit h-fit px-3 py-2 flex items-center gap-2 absolute -top-12.5 left-1/2 -translate-x-1/2 z-40 shadow-[0_-50px_90px_rgba(0,0,0,0.85)]'
@@ -116,9 +117,17 @@ export function MenuSection ({ children }) {
           </article>
 
           <article className='flex flex-col bg-neutral-950/50 p-3 gap-2 rounded-xl'>
-            <h2 className='text-white text-2xl'>
-              🛍️ Carrito
-            </h2>
+            <div className='flex items-center justify-between'>
+              <h2 className='text-white text-2xl'>
+                🛍️ Carrito
+              </h2>
+
+              {cart.length !== 0 && (
+                <div onClick={clearCart} className='flex items-center gap-2 relative w-fit bg-neutral-800 rounded'>
+                  <button className={`${BUTTON_RED_STYLE} font-bold  p-1.5 rounded`}>RESET</button>
+                </div>
+              )}
+            </div>
 
             <Cart cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} removeProduct={removeProduct} />
           </article>
