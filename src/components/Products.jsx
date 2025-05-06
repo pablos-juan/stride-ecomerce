@@ -11,8 +11,11 @@ function Rating ({ rating }) {
   )
 }
 
-export function Products ({ products }) {
+export function Products ({ products, search }) {
   const { cart, addToCart, removeProduct } = useCart()
+  const results = search
+    ? products.filter(product => product.title.toLowerCase().includes(search.toLowerCase()))
+    : products
 
   const isProductInCart = product => {
     return cart.some(item => item.id === product.id)
@@ -21,7 +24,7 @@ export function Products ({ products }) {
   return (
     <section className='w-full flex justify-center p-1 md:p-4 mb-8 md:mb-0'>
       <ul className='w-full grid grid-cols-[repeat(auto-fit,minmax(310px,1fr))] gap-3 md:gap-4'>
-        {products.map(product => {
+        {results.map(product => {
           const inCart = isProductInCart(product)
 
           return (

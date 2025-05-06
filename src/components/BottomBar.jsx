@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useFilters } from '../hooks/useFilters'
-import { ChevronDown, ChevronUp, Filter, Minus, Plus, ShoppingBag, Trash2 } from 'lucide-react'
+import { Filter, Minus, PanelBottomClose, PanelTopCloseIcon, Plus, ShoppingBag, Trash2 } from 'lucide-react'
 import { Filters } from './Filters'
 import { useCart } from '../hooks/useCart'
 import { BUTTON_RED_STYLE } from '../constants'
@@ -46,6 +46,10 @@ function Cart ({ cart, addToCart, removeFromCart, removeProduct }) {
   )
 }
 
+const NEUTRAL_STYLE = 'bg-neutral-700/50 text-neutral-500 hover:bg-neutral-700 hover:text-neutral-300 active:scale-150'
+
+const NEUTRAL_ACTIVE_STYLE = 'bg-amber-200/20 text-amber-100 hover:bg-amber-200/60 hover:text-amber-100 active:scale-150'
+
 export function MenuSection ({ children }) {
   const { cart, addToCart, removeProduct, removeFromCart, totalQuantity, clearCart } = useCart()
   const [isOpen, setIsOpen] = useState(false)
@@ -68,19 +72,15 @@ export function MenuSection ({ children }) {
         <article
           className='bg-neutral-800 text-white text-2sm font-bold border-1 border-neutral-500 border-b-transparent transition-all duration-300 rounded-t-3xl rounded-b-none w-fit h-fit px-3 py-2 flex items-center gap-2 absolute -top-12.5 left-1/2 -translate-x-1/2 z-40 shadow-[0_-50px_90px_rgba(0,0,0,0.85)]'
         >
-          <div className='flex items-center'>
-            <div className='flex items-center py-0.5 px-2.5 gap-2 bg-amber-700/80 rounded-full'>
-              <ShoppingBag size={18} className='text-amber-200' />
-              <span className='text-amber-200'>
-                {totalQuantity}
-              </span>
-
-              {/* agregar el precio total del carrito */}
-            </div>
+          <div className='flex items-center py-0.5 px-2.5 gap-2 bg-neutral-700/80 rounded-full'>
+            <ShoppingBag size={20} />
+            <span>
+              {totalQuantity}
+            </span>
           </div>
 
           <div className='flex items-center py-0.5 px-2.5 gap-2 bg-neutral-700/80 rounded-full'>
-            <Filter size={18} />
+            <Filter size={20} />
             <span className='text-white'>
               {currentFilters()}
             </span>
@@ -90,21 +90,11 @@ export function MenuSection ({ children }) {
 
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className='py-0.5 px-3 bg-neutral-700 text-white font-bold text-2sm border-1 border-neutral-500 rounded-full flex gap-1 items-center justify-center hover:border-neutral-200 transition-all duration-300 cursor-pointer transform-'
+            className={`${isOpen ? NEUTRAL_STYLE : NEUTRAL_ACTIVE_STYLE} w-fit rounded-full py-1 px-5 flex gap-2 transition-all duration-300 cursor-pointer`}
           >
             {isOpen
-              ? (
-                <>
-                  <ChevronDown size={18} />
-                  Cerrar
-                </>
-                )
-              : (
-                <>
-                  <ChevronUp size={18} />
-                  Abrir
-                </>
-                )}
+              ? <PanelBottomClose size={21} />
+              : <PanelTopCloseIcon size={21} />}
           </button>
         </article>
 

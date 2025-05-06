@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Products } from './components/Products'
 import { products as initialProducts } from './mocks/products.json'
 import { Header } from './components/Header'
@@ -8,6 +8,7 @@ import { CartProvider } from './context/cart'
 
 export function App () {
   const [sort, setSort] = useState('')
+  const [search, setSearch] = useState('')
   const [products] = useState(initialProducts)
   const { filterProducts, orderProducts } = useFilters()
 
@@ -16,9 +17,9 @@ export function App () {
 
   return (
     <CartProvider>
-      <Header sort={sort} setSort={setSort} />
+      <Header sort={sort} setSort={setSort} search={search} setSearch={setSearch} />
       <MenuSection />
-      <Products products={orderedProducts} />
+      <Products products={orderedProducts} search={search} />
     </CartProvider>
   )
 }
