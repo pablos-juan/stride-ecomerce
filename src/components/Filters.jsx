@@ -8,6 +8,9 @@ export function Filters () {
   const rangeId = useId()
   const categoryId = useId()
 
+  // debería cambiar esto, la asignación se repite, debería hacer
+  // un solo método para cada actualización, así sería más facil
+  // añadir otros filtros eventualmente
   const handleChangePrice = (event) => {
     setFilters(prev => ({
       ...prev,
@@ -56,12 +59,14 @@ export function Filters () {
         <select
           name='category'
           id={categoryId}
+          value={filters.category}
           onChange={handleChangeCategory}
           className='w-full bg-neutral-700 border-0 rounded px-3 py-1 text-sm text-white font-extrabold appearance-none cursor-pointer focus:ring-1 focus:ring-amber-300/50 outline-none min-w-[150px]'
         >
           <option value='all'>All</option>
           <option value='furniture'>Furniture</option>
           <option value='groceries'>Groceries</option>
+          <option value='beauty'>Beauty</option>
         </select>
 
         <ChevronDown className='absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-amber-200 pointer-events-none' />

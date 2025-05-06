@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { FiltersContext } from '../context/filters'
-import { DEFAULT_FILTERS } from '../constants'
+import { ALFABETIC_SORT, DEFAULT_FILTERS, MAX_PRICE_FIRST_SORT, MIN_PRICE_FIRST_SORT } from '../constants'
 
 export function useFilters () {
   const { filters, setFilters } = useContext(FiltersContext)
@@ -10,7 +10,7 @@ export function useFilters () {
   }
 
   const filterProducts = (products) => {
-    return products.slice(0, 10).filter(product => {
+    return products.filter(product => {
       return (
         product.price <= filters.range &&
         (
@@ -21,5 +21,16 @@ export function useFilters () {
     })
   }
 
-  return { filterProducts, filters, setFilters, resetFilters }
+  const sorters = {
+    [ALFABETIC_SORT]: (a, b) => a.title.localeCompare(b.title),
+    [MIN_PRICE_FIRST_SORT]: (a, b) => a.price - b.price,
+    [MAX_PRICE_FIRST_SORT]: (a, b) => b.price - a.price
+  }
+
+  const orderProducts = (products, sortType) => {
+    if (!sortType) return products
+    return [...products].sort(sorters[sortType])
+  }
+
+  return { filterProducts, filters, setFilters, resetFilters, orderProducts }
 }
