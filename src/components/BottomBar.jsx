@@ -53,7 +53,7 @@ const NEUTRAL_ACTIVE_STYLE = 'bg-amber-200/20 text-amber-100 hover:bg-amber-200/
 export function MenuSection ({ children }) {
   const { cart, addToCart, removeProduct, removeFromCart, totalQuantity, clearCart } = useCart()
   const [isOpen, setIsOpen] = useState(false)
-  const { filters } = useFilters()
+  const { filters, resetFilters } = useFilters()
 
   const currentFilters = () => {
     const defaultValues = {
@@ -79,11 +79,21 @@ export function MenuSection ({ children }) {
             </span>
           </div>
 
-          <div className={`flex items-center py-0.5 px-2.5 gap-2 ${currentFilters() !== 0 ? NEUTRAL_ACTIVE_STYLE : NEUTRAL_STYLE} rounded-full transition-all duration-300`}>
-            <Filter size={20} />
-            <span>
-              {currentFilters()}
-            </span>
+          <div className='flex items-center gap-2'>
+            <div className={`flex items-center py-0.5 px-2.5 gap-2 ${currentFilters() !== 0 ? NEUTRAL_ACTIVE_STYLE : NEUTRAL_STYLE} rounded-full transition-all duration-300`}>
+              <Filter size={20} />
+              <span>
+                {currentFilters()}
+              </span>
+            </div>
+
+            {currentFilters() !== 0 &&
+              <button
+                className={`${BUTTON_RED_STYLE} bg-neutral-700 text-sm py-1 px-2 rounded`}
+                onClick={resetFilters}
+              >
+                X
+              </button>}
           </div>
 
           <div className='h-8 border-1 border-neutral-700 mx-1' />
@@ -113,8 +123,12 @@ export function MenuSection ({ children }) {
               </h2>
 
               {cart.length !== 0 && (
-                <div onClick={clearCart} className='flex items-center gap-2 relative w-fit bg-neutral-800 rounded'>
-                  <button className={`${BUTTON_RED_STYLE} font-bold  p-1.5 rounded`}>RESET</button>
+                <div className='flex items-center gap-2 relative w-fit bg-neutral-800 rounded'>
+                  <button
+                    onClick={clearCart}
+                    className={`${BUTTON_RED_STYLE} font-bold  p-1.5 rounded`}
+                  >RESET
+                  </button>
                 </div>
               )}
             </div>

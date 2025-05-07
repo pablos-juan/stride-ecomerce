@@ -26,6 +26,10 @@ export function Products ({ products, search }) {
     return cart.some(item => item.id === product.id)
   }
 
+  const getCartItem = product => {
+    return cart.find(item => item.id === product.id)
+  }
+
   return (
     <section className='w-full flex justify-center p-1 md:p-4 mb-8 md:mb-0'>
       <ul className='w-full grid grid-cols-[repeat(auto-fit,minmax(310px,1fr))] gap-3 md:gap-4'>
@@ -64,7 +68,7 @@ export function Products ({ products, search }) {
                 >
                   {inCart
                     ? (
-                      <>Eliminar</>
+                      <>Eliminar: {getCartItem(product).quantity}</>
                       )
                     : (
                       <>
