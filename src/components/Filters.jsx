@@ -1,4 +1,4 @@
-import { useId } from 'react'
+import { useCallback, useId } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { useFilters } from '../hooks/useFilters'
 import { BUTTON_RED_STYLE, DEFAULT_FILTERS } from '../constants.js'
@@ -8,22 +8,12 @@ export function Filters () {
   const rangeId = useId()
   const categoryId = useId()
 
-  // debería cambiar esto, la asignación se repite, debería hacer
-  // un solo método para cada actualización, así sería más facil
-  // añadir otros filtros eventualmente
-  const handleChangePrice = (event) => {
+  const handleFilterChange = useCallback((key, value) => {
     setFilters(prev => ({
       ...prev,
-      range: Number(event.target.value)
+      [key]: value
     }))
-  }
-
-  const handleChangeCategory = (event) => {
-    setFilters(prev => ({
-      ...prev,
-      category: event.target.value
-    }))
-  }
+  }, [setFilters])
 
   return (
     <section className='flex flex-wrap w-full gap-2'>
@@ -34,7 +24,7 @@ export function Filters () {
           min={0}
           max={9999}
           value={filters.range}
-          onChange={handleChangePrice}
+          onChange={(e) => handleFilterChange('range', Number(e.target.value))}
           className='flex-grow h-2 bg-neutral-700 rounded-full appearance-none cursor-pointer'
           style={{
             backgroundImage: `linear-gradient(to right, rgb(252, 211, 77, 0.5) 0%, rgb(252, 211, 77, 0.5) ${
@@ -60,7 +50,7 @@ export function Filters () {
           name='category'
           id={categoryId}
           value={filters.category}
-          onChange={handleChangeCategory}
+          onChange={(e) => handleFilterChange('category', e.target.value)}
           className='w-full bg-neutral-700 border-0 rounded px-3 py-1 text-sm text-white font-extrabold appearance-none cursor-pointer focus:ring-1 focus:ring-amber-300/50 outline-none min-w-[150px]'
         >
           <option value='all'>All</option>

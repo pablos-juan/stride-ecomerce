@@ -1,6 +1,7 @@
 import { ShoppingCart, Star } from 'lucide-react'
 import { useCart } from '../hooks/useCart'
 import { BUTTON_RED_STYLE, BUTTON_AMBER_STYLE } from '../constants.js'
+import { useMemo } from 'react'
 
 function Rating ({ rating }) {
   return (
@@ -13,9 +14,13 @@ function Rating ({ rating }) {
 
 export function Products ({ products, search }) {
   const { cart, addToCart, removeProduct } = useCart()
-  const results = search
-    ? products.filter(product => product.title.toLowerCase().includes(search.toLowerCase()))
-    : products
+
+  const results = useMemo(() => {
+    if (!search) return products
+    return products.filter(product =>
+      product.title.toLowerCase().includes(search.toLowerCase())
+    )
+  }, [products, search])
 
   const isProductInCart = product => {
     return cart.some(item => item.id === product.id)
