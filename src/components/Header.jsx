@@ -18,7 +18,7 @@ export function Header ({ sort, setSort, search, setSearch }) {
   }
 
   return (
-    <header className='flex flex-col md:flex-row justify-center md:items-center p-1 md:p-4 m-2 gap-2'>
+    <header className='flex flex-col md:flex-row justify-center md:items-center p-1 md:p-4 mx-2 my-4 gap-2'>
       <input
         type='text'
         value={search}

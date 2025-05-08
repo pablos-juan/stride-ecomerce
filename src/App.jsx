@@ -5,6 +5,7 @@ import { Header } from './components/Header'
 import { useFilters } from './hooks/useFilters'
 import { MenuSection } from './components/BottomBar'
 import { CartProvider } from './context/cart'
+import { Banner } from './components/Banner'
 
 export function App () {
   const [sort, setSort] = useState('')
@@ -24,9 +25,13 @@ export function App () {
 
   return (
     <CartProvider>
-      <Header sort={sort} setSort={setSort} search={search} setSearch={setSearch} />
-      <MenuSection />
-      <Products products={orderedProducts} search={search} />
+      <Banner />
+
+      <main className='p-2 md:p-12 md:pt-6'>
+        <Header sort={sort} setSort={setSort} search={search} setSearch={setSearch} />
+        <MenuSection />
+        <Products products={orderedProducts} search={search} />
+      </main>
     </CartProvider>
   )
 }
