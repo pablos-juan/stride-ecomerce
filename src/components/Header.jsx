@@ -24,7 +24,7 @@ export function Header ({ sort, setSort, search, setSearch }) {
     <header className='flex flex-col justify-center p-1 m-2 gap-2'>
       <div className='flex items-center justify-between w-full gap-2'>
         <img
-          src='/public/images/ebai.webp'
+          src='public/images/ebai.webp'
           alt='logo'
           className='w-28'
         />
