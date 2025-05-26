@@ -27,7 +27,7 @@ export function App () {
     <CartProvider>
       <Banner />
 
-      <main className='p-2 md:p-12 md:pt-6'>
+      <main className='p-2 pb-12 md:p-12 md:pt-0'>
         <Header sort={sort} setSort={setSort} search={search} setSearch={setSearch} />
         <MenuSection />
         <Products products={orderedProducts} search={search} />

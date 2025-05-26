@@ -17,7 +17,7 @@ export function Filters () {
 
   return (
     <section className='flex flex-wrap w-full gap-2'>
-      <div className='flex max-w-[307px] items-center gap-3 flex-grow p-1.5 bg-neutral-800 rounded'>
+      <div className='flex max-w-[307px] items-center gap-2 flex-grow p-2 bg-neutral-800 rounded-full'>
         <input
           type='range'
           id={rangeId}
@@ -32,17 +32,18 @@ export function Filters () {
             }%, rgb(64, 64, 64) ${(filters.range / 9999) * 100}%, rgb(64, 64, 64) 100%)`
           }}
         />
+
         <label
           htmlFor='price'
-          className='text-amber-100 text-center bg-amber-200/20 p-1.5 rounded leading-none text-sm font-bold w-[150px]'
+          className='text-amber-100 text-center bg-amber-200/20 p-1.5 rounded-full leading-none text-sm font-bold w-[150px]'
         >Max value: ${filters.range}
         </label>
       </div>
 
-      <div className='flex items-center gap-2 relative w-fit p-1.5 bg-neutral-800 rounded'>
+      <div className='flex items-center gap-2 relative w-fit p-2 bg-neutral-800 rounded-full'>
         <label
           htmlFor='category'
-          className='text-amber-100 bg-amber-200/20 p-1.5 rounded text-sm leading-none font-bold flex items-center justify-center h-fit'
+          className='text-amber-100 bg-amber-200/20 p-1.5 rounded-full text-sm leading-none font-bold flex items-center justify-center h-fit'
         >Cagetory
         </label>
 
@@ -51,7 +52,7 @@ export function Filters () {
           id={categoryId}
           value={filters.category}
           onChange={(e) => handleFilterChange('category', e.target.value)}
-          className='w-full bg-neutral-700 border-0 rounded px-3 py-1 text-sm text-white font-extrabold appearance-none cursor-pointer focus:ring-1 focus:ring-amber-300/50 outline-none min-w-[150px]'
+          className='w-full bg-neutral-700 border-0 rounded-full px-3 py-1 text-sm text-white font-extrabold appearance-none cursor-pointer focus:ring-1 focus:ring-amber-300/50 outline-none min-w-[150px]'
         >
           <option value='all'>All</option>
           <option value='furniture'>Furniture</option>
@@ -64,7 +65,7 @@ export function Filters () {
 
       {Object.entries(filters).filter(([key, value]) => value !== DEFAULT_FILTERS[key]).length !== 0 &&
         <div className='flex items-center gap-2 relative w-fit bg-neutral-800 rounded'>
-          <button onClick={resetFilters} className={`${BUTTON_RED_STYLE} font-bold  p-1.5 rounded`}>RESET</button>
+          <button onClick={resetFilters} className={`${BUTTON_RED_STYLE} font-bold h-full p-1.5 rounded`}>RESET</button>
         </div>}
     </section>
   )
