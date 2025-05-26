@@ -9,6 +9,7 @@ const NEUTRAL_ACTIVE_STYLE = 'bg-amber-200/20 text-amber-100 hover:bg-amber-200/
 
 export function Header ({ sort, setSort, search, setSearch }) {
   const [active, setActive] = useState()
+  const [userActive, setUserActive] = useState()
   const handleClick = (event) => {
     const { id } = event.currentTarget
     if (id === sort) return setSort('')
@@ -30,11 +31,17 @@ export function Header ({ sort, setSort, search, setSearch }) {
         />
 
         <div className='flex gap-2'>
-          <div className='text-neutral-500 border-1 border-neutral-500 p-3 rounded-full bg-neutral-700/50 hover:bg-neutral-700 hover:text-neutral-300 active:scale-130 transition-all duration-300'>
+          <button
+            className='flex gap-2 text-neutral-500 border-1 border-neutral-500 p-3 rounded-full bg-neutral-700/50 hover:bg-neutral-700 hover:text-neutral-300 active:scale-130 transition-all duration-300 cursor-pointer'
+            onClick={() => setUserActive(!userActive)}
+          >
+            <span className={`${userActive ? 'opacity-0 hidden md:block md:opacity-100 max-h-10' : 'opacity-0 max-h-0 hidden'}`}>
+              Registrese o inicie sesión con <span className='p-1 rounded bg-amber-200/20'>Google</span>
+            </span>
             <User />
-          </div>
+          </button>
 
-          <div className='text-neutral-500 border-1 border-neutral-500 p-3 rounded-full bg-neutral-700/50 hover:bg-neutral-700 hover:text-neutral-300 active:scale-130 transition-all duration-300'>
+          <div className='text-neutral-500 border-1 border-neutral-500 p-3 rounded-full bg-neutral-700/50 hover:bg-neutral-700 hover:text-neutral-300 active:scale-130 transition-all duration-300 cursor-pointer'>
             <MapPin />
           </div>
         </div>
@@ -57,7 +64,16 @@ export function Header ({ sort, setSort, search, setSearch }) {
         </button>
       </div>
 
-      <div className={`flex flex-col mt-2 md:flex-row gap-2 justify-between w-full transition-all duration-300 ${active ? 'opacity-100 max-h-46 overflow-hidden' : 'opacity-0 max-h-0'}`}>
+      <div
+        className={`
+          flex flex-col mt-2 md:flex-row gap-2 justify-between w-full transition-all duration-300
+          ${active ? 'opacity-100 max-h-46 pointer-events-auto' : 'opacity-0 max-h-0 pointer-events-none'}
+          overflow-hidden
+        `}
+        style={{
+          transitionProperty: 'opacity, max-height'
+        }}
+      >
         <div className='flex gap-2'>
           <button onClick={handleClick} id={ALFABETIC_SORT} className={`${sort === ALFABETIC_SORT ? NEUTRAL_ACTIVE_STYLE : NEUTRAL_STYLE} rounded-full py-3 px-4 flex gap-2 transition-all duration-300 cursor-pointer`}>
             <ArrowUpAZ />
